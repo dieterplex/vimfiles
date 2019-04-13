@@ -1,4 +1,12 @@
 set nocompatible
+set encoding=utf-8
+set fileencodings=utf-8,utf-16,big5,gb18030,latin1
+
+function! SourceIfExists(path)
+   if filereadable(glob(a:path))
+       exec ":source " . a:path
+   endif
+endfunction
 
 "set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -52,6 +60,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'FooSoft/vim-argwrap'
+call SourceIfExists('~/.vim/vundleconfig.vim')
 call vundle#end()
 
 "not sure why this is getting unset by vundle
@@ -146,7 +155,6 @@ endif
 "set t_Co=256
 
 set background=dark
-colorscheme peaksea
 hi Normal guibg=NONE ctermbg=NONE
 hi EndOfBuffer guibg=NONE ctermbg=NONE
 
@@ -405,9 +413,6 @@ nnoremap <leader>tl :TestLast<cr>
 nnoremap <leader>tg :TestVisit<cr>
 
 "explorer mappings
-nnoremap <leader>bb :BufExplorer<cr>
-nnoremap <leader>bs :BufExplorerHorizontalSplit<cr>
-nnoremap <leader>bv :BufExplorerVerticalSplit<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
 nnoremap <leader>nn :e .<cr>
@@ -639,3 +644,5 @@ nnoremap <leader>gn :Gwrite \| next \| call search('=======')<cr>
 
 " I typo this enough to be worthwhile aliasing it
 command! W :write
+
+call SourceIfExists('~/.vim/myconfig.vim')
