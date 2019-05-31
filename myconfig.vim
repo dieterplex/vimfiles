@@ -1,9 +1,12 @@
+set visualbell
 set cursorline
 set autochdir
 
 " Use a font that supports a wider range of UTF-8 characters
-set guifont=DejaVu\ Sans\ Mono\ 12
-set guifontwide=DejaVu\ Sans\ Mono\ 12
+if has("gui_running")
+  set guifont=Fira\ Code\ 12
+  set guifontwide=DejaVu\ Sans\ Mono\ 12
+endif
 
 " Complete options (disable preview scratch window)
 set completeopt=menu,menuone,longest
@@ -14,15 +17,21 @@ set pumheight=15
 " Git gutter update more quickly
 set updatetime=250
 
+set wildignore+=*/target/*
+
 " Make the colorcolumn a little less severe.
 highlight ColorColumn ctermbg=238
 highlight ColorColumn guibg=#444444
 
-"colorscheme peaksea
+"colorscheme desert
 colorscheme zenburn
-let g:airline_theme='zenburn'
+"let g:airline_theme='zenburn'
 "Make gitcommit tw play nice with gerrit
 autocmd filetype svn,*commit* setlocal tw=70
+
+" Open nerdtree when opening dir
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 " Real man's escape in insert mode
 inoremap jj <ESC>
@@ -97,6 +106,19 @@ let g:ale_set_quickfix = 1
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+"" Configure Language Server Protocol, LSP
+"" let g:LanguageClient_autoStart = 0
+"let g:LanguageClient_serverCommands = {
+    "\ 'rust': ['~/.cargo/bin/rustup', 'run', 'nightly-2018-12-06', 'rls'],
+    "\ 'python': ['~/.local/bin/pyls'],
+    "\ }
+"nnoremap <silent> R :call LanguageClient_textDocument_rename()<CR>
+"nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+"nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+"nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+"nnoremap <leader>lcs :LanguageClientStart<CR>
+"let g:completor_racer_binary = "~/.cargo/bin/racer"
 
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is on

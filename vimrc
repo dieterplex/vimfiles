@@ -1,6 +1,6 @@
 set nocompatible
 set encoding=utf-8
-set fileencodings=utf-8,utf-16,big5,gb18030,latin1
+set fileencodings=utf-8,utf-16,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
 function! SourceIfExists(path)
    if filereadable(glob(a:path))
